@@ -23,6 +23,8 @@ jobs:
           python-version: "3.x"
       - run: pip install mkdocs-material
       - run: mkdocs build
+      - run: cp docs/CNAME site/CNAME
+      - run: touch site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
