@@ -26,23 +26,19 @@ theme:
     - search.highlight
     - search.suggest
     - content.code.copy
-  icon:
-    repo: fontawesome/brands/github
 
 nav:
   - 首页: index.md
   - 教程:
-    - Codex CLI: codex-cli.md
-    - Cline 编辑器插件: cline.md
     - Claude Code: claude-code.md
+    - Codex CLI: codex-cli.md
+    - cc-switch: cline.md
   - 常见问题: faq.md
 
 markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite

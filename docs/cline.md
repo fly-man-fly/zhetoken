@@ -1,82 +1,99 @@
-# Cline 编辑器插件配置
+# cc-switch 配置教程
 
-Cline 是一个 VS Code 插件，让你在编辑器中直接使用 AI 编程助手。
+## 前言
 
-## 快速导航
+开源工具，可方便地管理 API key、MCP、Skills，无需手动配置环境变量，并支持多渠道一键切换。
 
-- [第一步：获取 API Key](#step-1)
-- [第二步：安装 Cline 插件](#step-2)
-- [第三步：配置中转站](#step-3)
-- [常见问题](#faq)
+下载地址：[https://github.com/farion1231/cc-switch/releases](https://github.com/farion1231/cc-switch/releases)
 
 ---
 
-## 第一步：获取 API Key { #step-1 }
+## 下载与安装
 
-访问控制台：[https://codex-for.me/dashboard.html](https://codex-for.me/dashboard.html)
+在 Release 页根据系统选择对应的安装包
 
-在 API Key 管理区域复制你的密钥。
+### Windows
 
----
+下载 `.exe` 安装包，双击运行，按向导完成安装
 
-## 第二步：安装 Cline 插件 { #step-2 }
+### Mac
 
-1. 打开 VS Code
-2. 按 `Ctrl+Shift+X`（macOS 为 `Cmd+Shift+X`）打开扩展商店
-3. 搜索 **Cline**
-4. 点击 **Install** 安装
+下载 `CC-Switch-vX.X.X-macOS.dmg`（universal 通用包，Apple Silicon 和 Intel 均可使用），双击挂载后将图标拖入 Applications
 
-安装完成后，左侧活动栏会出现 Cline 图标。
+如需免安装版可下载 `macOS.tar.gz`，解压后即可运行
 
----
+!!! warning "注意"
+    首次打开若提示"无法验证开发者"，前往 **系统设置 → 隐私与安全性**，点击"仍要打开"
 
-## 第三步：配置中转站 { #step-3 }
+### Linux
 
-### 打开 Cline 设置
+Linux 提供三种格式，每种都有 `arm64` 和 `x86_64` 两个架构（按你的 CPU 选择对应版本）
 
-1. 点击左侧的 Cline 图标
-2. 点击右上角的齿轮图标进入设置
+- `.AppImage`：通用免安装，所有发行版均可使用
+- `.deb`：Ubuntu / Debian / Deepin 等
+- `.rpm`：CentOS / RHEL / Fedora / openSUSE 等
 
-### 填写配置
+#### AppImage（通用，免安装）
 
-在设置页面中：
+```bash
+chmod +x CC-Switch-*-Linux-*.AppImage
+./CC-Switch-*-Linux-*.AppImage
+```
 
-| 配置项 | 填写内容 |
-|--------|----------|
-| **API Provider** | 选择 `OpenAI Compatible` |
-| **Base URL** | 填入中转站地址 |
-| **API Key** | 填入你的 API Key |
-| **Model** | 选择你想使用的模型 |
+#### deb 包（Ubuntu / Debian）
 
-!!! tip "推荐模型"
-    - `claude-sonnet-4-20250514` — 性价比最高，日常开发推荐
-    - `claude-opus-4-20250514` — 最强能力，复杂任务推荐
-    - `gpt-4o` — 通用能力优秀
+```bash
+sudo dpkg -i CC-Switch-*-Linux-*.deb
+sudo apt install -f
+```
 
-### 验证配置
+#### rpm 包（CentOS / RHEL / Fedora）
 
-在 Cline 的对话框中输入任意问题，如果正常回复则表示配置成功。
+```bash
+sudo rpm -i CC-Switch-*-Linux-*.rpm
+```
 
----
+或使用 dnf / yum：
 
-## 常见问题 { #faq }
-
-### Q: 提示 "Connection refused" 怎么办？
-
-1. 检查 Base URL 是否填写正确
-2. 确认网络可以访问中转站地址
-3. 尝试在浏览器中打开 Base URL 看是否能访问
-
-### Q: 响应速度很慢怎么办？
-
-1. 尝试切换到更快的模型
-2. 检查网络延迟
-3. 减少单次对话的上下文长度
-
-### Q: 如何切换模型？
-
-在 Cline 设置页面的 Model 选项中直接切换即可，无需重启。
+```bash
+sudo dnf install ./CC-Switch-*-Linux-*.rpm
+```
 
 ---
 
-还有其他问题？请查看 [常见问题](faq.md) 页面。
+## 添加渠道
+
+先从官网获取 API Key 与请求地址，记录备用
+
+### Claude 为例
+
+1. 顶部选择 Claude 图标后点击加号
+2. 选择 **自定义渠道**
+3. 仅需填写 **供应商名称、API Key、请求地址**，点击 **添加/保存** 即可自动启用
+
+### Codex 为例
+
+1. 顶部选择 Codex 图标后点击加号
+2. 选择 **自定义渠道**
+3. 仅需填写 **供应商名称、API Key、请求地址（Codex 需要以 /v1 结尾）**，点击 **添加/保存** 即可自动启用
+
+### Gemini 为例
+
+设置与上述相同，换汤不换药
+
+---
+
+## 附加设置
+
+建议开启以下两项：
+
+- **应用到 ClaudeCode 插件**：让 VSCode/JetBrains 等 IDE 内的 Claude Code 插件自动读取当前渠道
+- **跳过 Claude Code 初次安装确认**：第一次启动 `claude` 时不再弹出登录/授权确认
+
+---
+
+## 切换 / 管理渠道
+
+在主界面点击任意渠道即可切换为当前生效渠道，无需重启 Claude Code（下次启动 `claude` 命令时即生效）
+
+渠道支持 编辑 / 删除 / 排序，便于在 Anthropic 官方、第三方代理、本地代理之间快速切换

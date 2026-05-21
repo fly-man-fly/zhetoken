@@ -1,155 +1,133 @@
-# Codex CLI 快速上手
+# Codex CLI 配置教程
 
-欢迎使用 Codex！本教程将帮助你快速完成配置，开始使用 AI 编程助手。
+## 前言
 
-## 快速导航
+Codex CLI 是 OpenAI 官方的命令行 AI 编程工具。本文介绍 Windows / Mac / Linux 三系统的统一配置流程。
 
-- [第一步：获取 Codex API Key](#step-1)
-- [第二步：选择使用方式](#step-2)
-- [常见问题](#faq)
+前置 Node.js 与 Git 环境的安装请参考 **Node.js 与 Git 环境配置教程**，cc-switch 配置详见 **cc-switch 配置教程**。
 
 ---
 
-## 第一步：获取 Codex API Key { #step-1 }
+## 安装 Codex CLI
 
-### 1. 登录控制台
+### 安装方法
 
-访问 Codex 控制台：[https://codex-for.me/dashboard.html](https://codex-for.me/dashboard.html)
-
-登录后可以看到：
-
-- 账户余额
-- 卡密兑换入口
-- API Key 管理
-
-### 2. 兑换卡密（如需充值）
-
-在控制台的「卡密兑换」面板输入卡号，额度会即时到账。
-
-### 3. 获取 API Key
-
-在控制台的 API Key 区域复制你的密钥，稍后配置时需要用到。
-
-!!! warning "注意"
-    请妥善保管你的 API Key，不要分享给他人或提交到公开仓库。
-
----
-
-## 第二步：选择使用方式 { #step-2 }
-
-Codex 提供两种使用方式，根据你的需求选择：
-
-| 方式 | 适合人群 | 特点 |
-|------|----------|------|
-| **命令行工具**（推荐） | 开发者 | 功能完整，性能最佳，官方支持 |
-| **编辑器插件** | 日常开发 | 集成在编辑器中，使用便捷 |
-
-!!! tip "推荐"
-    推荐使用命令行工具：功能更强大，响应更快，体验更好。
-
-两种方式可以同时使用，互不影响。
-
-### 方案 A：命令行工具（推荐）
-
-#### 安装
+三系统使用同一条 npm 命令
 
 ```bash
-npm install -g codex-cli
+npm install -g @openai/codex
 ```
 
-#### 配置环境变量
-
-=== "macOS / Linux"
-
-    在终端中执行：
-
-    ```bash
-    export CODEX_API_KEY="你的API Key"
-    ```
-
-    为了永久生效，添加到 shell 配置文件：
-
-    ```bash
-    echo 'export CODEX_API_KEY="你的API Key"' >> ~/.bashrc
-    source ~/.bashrc
-    ```
-
-=== "Windows"
-
-    在 PowerShell 中执行：
-
-    ```powershell
-    $env:CODEX_API_KEY = "你的API Key"
-    ```
-
-    为了永久生效，设置系统环境变量：
-
-    ```powershell
-    [Environment]::SetEnvironmentVariable("CODEX_API_KEY", "你的API Key", "User")
-    ```
-
-#### 验证安装
+验证
 
 ```bash
 codex --version
 ```
 
-看到版本号即表示安装成功。
+输出版本号即为安装成功
 
-#### 开始使用
+### 常见问题
+
+**Q：permission denied / EACCES 错误（Mac / Linux）**
+
+不要使用 `sudo`，把 npm 全局目录改到用户目录
 
 ```bash
-# 在项目目录中启动
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc   # zsh 用户改为 ~/.zshrc
+source ~/.bashrc
+```
+
+**Q：permission denied 错误（Windows）**
+
+以管理员身份运行 PowerShell
+
+```bash
+npm config set prefix "$env:APPDATA\npm"
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+**Q：command not found: codex**
+
+npm 全局 bin 目录未加入 PATH，执行 `npm config get prefix` 查看路径，将对应的 `/bin` 目录追加到系统 PATH
+
+---
+
+## 配置 API
+
+### cc-switch（推荐）
+
+cc-switch 同时支持 Claude Code 和 Codex，无需手动编辑配置文件，可在多渠道间一键切换。
+
+详细安装与使用见 **cc-switch 配置教程**
+
+!!! warning "注意"
+    Codex 的 Base URL 必须带 `/v1` 后缀（与 Claude Code 不同）
+
+### 手动编辑配置文件
+
+Codex 不使用环境变量，而是读取两个配置文件：
+
+| 系统 | config.toml | auth.json |
+|------|-------------|-----------|
+| Windows | `C:\Users\<用户名>\.codex\config.toml` | `C:\Users\<用户名>\.codex\auth.json` |
+| Mac / Linux | `~/.codex/config.toml` | `~/.codex/auth.json` |
+
+#### 编辑 config.toml
+
+若文件不存在，先创建 `.codex` 目录再新建文件。Windows 在 `%USERPROFILE%`，Mac/Linux 直接 `mkdir -p ~/.codex`
+
+```toml
+model_provider = "custom"
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+disable_response_storage = true
+
+[model_providers.custom]
+name = "custom"
+base_url = "https://你的请求地址/v1"
+wire_api = "responses"
+requires_openai_auth = true
+model_context_window = 1000000
+model_auto_compact_token_limit = 900000
+```
+
+#### 编辑 auth.json
+
+```json
+{
+  "OPENAI_API_KEY": "sk-xxx"
+}
+```
+
+保存后重启终端，`codex` 启动时会自动读取上述配置
+
+#### 配置参数速查
+
+| 参数 | 说明 | 可选值 |
+|------|------|--------|
+| `model_provider` | 模型提供商标识，需与下方 `[model_providers.xxx]` 一致 | 自定义名称 |
+| `model` | 使用的模型 | 见模型列表 |
+| `model_reasoning_effort` | 推理深度 | `low` / `medium` / `high` |
+| `disable_response_storage` | 禁用服务端响应存储 | 推荐 `true` |
+| `wire_api` | API 协议 | `responses` |
+| `model_context_window` | 上下文窗口（1M 长上下文场景填 `1000000`） | 整数 |
+| `model_auto_compact_token_limit` | 接近上限前自动压缩对话 | 整数（一般 `900000`） |
+
+---
+
+## 开始使用
+
+在任意项目目录打开终端，输入 `codex` 启动
+
+```bash
+cd 你的项目目录
 codex
-
-# 或者直接提问
-codex "帮我写一个快速排序"
 ```
 
-### 方案 B：编辑器插件
+看到输入框出现提示符后，直接用中文或英文描述需求即可，例如
 
-#### VS Code 安装
-
-1. 打开 VS Code
-2. 进入扩展商店，搜索 **Codex**
-3. 点击安装
-4. 打开设置，填入你的 API Key
-
-#### JetBrains 安装
-
-1. 打开 IDE（IntelliJ IDEA / PyCharm 等）
-2. 进入 Settings → Plugins
-3. 搜索 **Codex** 并安装
-4. 重启 IDE，在设置中填入 API Key
-
----
-
-## 常见问题 { #faq }
-
-### Q: 提示 "API Key 无效" 怎么办？
-
-请检查：
-
-1. API Key 是否完整复制（没有多余空格）
-2. 账户余额是否充足
-3. API Key 是否已过期
-
-### Q: 命令行和编辑器插件可以同时使用吗？
-
-可以。两种方式互不影响，同一个 API Key 可以在多处同时使用。
-
-### Q: 连接超时怎么办？
-
-1. 检查网络连接
-2. 尝试切换网络环境
-3. 如果使用代理，请确保代理配置正确
-
-### Q: 如何更新到最新版本？
-
-```bash
-npm update -g codex-cli
 ```
-
----
-
-还有其他问题？请联系客服或查看 [常见问题](faq.md) 页面。
+帮我用 Python 实现一个二叉搜索树，包含插入、删除、查找方法
+```

@@ -4,15 +4,15 @@
 
 ### API Key 在哪里获取？
 
-访问 [控制台](https://codex-for.me/dashboard.html)，登录后在 API Key 管理区域复制。
+访问 [官网](https://code.b886.top)，登录后在左侧 **令牌管理** 中添加令牌并复制密钥。
 
 ### API Key 通用吗？
 
-是的，同一个 API Key 可以在所有工具（Codex CLI、Cline、Claude Code 等）中使用。
+是的，同一个 API Key 可以在所有工具（Codex CLI、Claude Code 等）中使用。
 
 ### 如何充值？
 
-在控制台的「卡密兑换」面板输入卡号，额度即时到账。
+在官网首页，输入自定义充值数量（1元起），或选择预设充值额度，选择支付方式即可。
 
 ### 账户余额不足会怎样？
 
@@ -25,15 +25,14 @@ API 调用会返回错误，提示余额不足。充值后即可恢复使用。
 ### 连接超时
 
 1. 检查网络连接是否正常
-2. 确认中转站地址是否正确
+2. 确认 API/URL 地址是否正确（Codex 需要加 `/v1` 后缀）
 3. 尝试更换网络环境
-4. 如果使用 VPN/代理，尝试关闭或切换节点
 
-### 提示 "SSL Error"
+### 提示 "Authentication failed" / "Unauthorized"
 
-1. 检查系统时间是否正确
-2. 尝试更新系统证书
-3. 联系客服获取帮助
+1. 检查 API Key 是否完整复制（没有多余空格）
+2. 确认令牌已选择正确的分组
+3. 检查账户余额是否充足
 
 ### 响应速度慢
 
@@ -47,44 +46,41 @@ API 调用会返回错误，提示余额不足。充值后即可恢复使用。
 
 ### Codex CLI
 
-**Q: `npm install` 报错怎么办？**
+**Q：`codex` 命令找不到怎么办？**
 
-确保 Node.js 版本 >= 18：
+npm 全局 bin 目录未加入 PATH，执行 `npm config get prefix` 查看路径，将对应的 `/bin` 目录追加到系统 PATH。
 
-```bash
-node --version
-```
+**Q：Base URL 应该填什么？**
 
-如果版本过低，请先升级 Node.js。
-
-**Q: 如何更新 Codex CLI？**
-
-```bash
-npm update -g codex-cli
-```
-
-### Cline
-
-**Q: VS Code 中找不到 Cline 插件？**
-
-确保 VS Code 版本 >= 1.80。可以在 `帮助 → 关于` 中查看版本。
-
-**Q: Cline 设置中没有 "OpenAI Compatible" 选项？**
-
-更新 Cline 插件到最新版本。
+Codex 的 Base URL 必须带 `/v1` 后缀（与 Claude Code 不同）。
 
 ### Claude Code
 
-**Q: `claude` 命令找不到？**
+**Q：`claude` 命令找不到怎么办？**
 
-检查 npm 全局安装路径是否在 PATH 中：
+npm 全局 bin 目录未加入 PATH，执行 `npm config get prefix` 查看路径，将对应的 `/bin` 目录追加到系统 PATH。
+
+**Q：permission denied 错误（Mac / Linux）**
+
+不要使用 `sudo`，把 npm 全局目录改到用户目录：
 
 ```bash
-npm config get prefix
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-确保该路径下的 `bin` 目录在系统 PATH 中。
+### cc-switch
+
+**Q：切换渠道后不生效？**
+
+下次启动 `claude` 或 `codex` 命令时即生效，无需重启终端。
+
+**Q：如何让 VSCode 插件也使用当前渠道？**
+
+在 cc-switch 设置中开启 **应用到 ClaudeCode 插件** 即可。
 
 ---
 
-还有其他问题？请联系客服获取帮助。
+还有其他问题？联系站长解决即可。
