@@ -1,5 +1,5 @@
-site_name: AI 中转站配置教程
-site_description: 各类 AI 工具的中转站配置指南
+site_name: CCTQ教程站
+site_description: AI 中转站配置教程
 site_url: ""
 
 theme:
@@ -28,12 +28,9 @@ theme:
     - content.code.copy
 
 nav:
-  - 首页: index.md
-  - 教程:
-    - Claude Code: claude-code.md
-    - Codex CLI: codex-cli.md
-    - cc-switch: cline.md
-  - 常见问题: faq.md
+  - 注册 & API/Key & 充值: index.md
+  - Codex CLI配置教程: codex-cli.md
+  - cc-switch配置教程: cline.md
 
 markdown_extensions:
   - admonition
