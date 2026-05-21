@@ -2,7 +2,7 @@
 
 ## 注册账号
 
-访问官网：[code.b886.top](https://code.b886.top)
+访问官网：[zhetoken.xyz](https://zhetoken.xyz)
 
 当前支持：LinuxDo 快捷登录 与 邮箱注册
 
