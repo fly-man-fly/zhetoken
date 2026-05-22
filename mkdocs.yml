@@ -1,5 +1,5 @@
-site_name: AI中转站教程
-site_description: AI 中转站配置教程
+site_name: ZHETOKEN使用教程
+site_description: ZHETOKEN 配置教程
 site_url: ""
 
 theme:
@@ -29,8 +29,7 @@ theme:
 
 nav:
   - 注册 & API/Key & 充值: index.md
-  - Codex CLI配置教程: codex-cli.md
-  - cc-switch配置教程: cline.md
+  - Codex CLI 配置教程: codex-cli.md
 
 markdown_extensions:
   - admonition
