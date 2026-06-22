@@ -1,6 +1,63 @@
 # Codex CLI 配置教程
 
-欢迎使用 ZHETOKEN。本教程沿用当前站点的页面布局，帮助你快速完成 Codex 配置并开始使用。
+---
+
+## 第一部分：Codex 客户端 + cc-Switch（新手最推荐）
+
+此方法无需命令行，图形界面操作，适合新手快速上手。
+
+### 第一步：打开微软应用商店
+
+在 Windows 搜索栏中搜索「微软商店」并打开：
+
+![搜索微软商店](images/codex-cc/1.png)
+
+### 第二步：搜索 Codex
+
+在微软商店搜索框中输入 `Codex` 并搜索：
+
+![搜索 Codex](images/codex-cc/2.png)
+
+### 第三步：下载安装 Codex
+
+点击下载并安装 Codex 客户端：
+
+![下载 Codex](images/codex-cc/3.png)
+
+### 第四步：打开 cc-Switch
+
+安装 cc-Switch：
+
+1. 访问 GitHub 开源仓库：[https://github.com/farion1231/cc-switch](https://github.com/farion1231/cc-switch)
+2. 下载最新的发行版本（Release）：进入仓库后，点击右侧的 `Releases` 区域，或直接访问：[Releases 页面](https://github.com/farion1231/cc-switch/releases)
+
+安装完成后打开 cc-Switch 客户端：
+
+![打开 cc-Switch](images/codex-cc/4.png)
+
+### 第五步：配置 cc-Switch
+
+在 cc-Switch 中填写配置信息（API Key 和请求地址）：
+
+![配置 cc-Switch](images/codex-cc/5.png)
+
+### 第六步：复制 API Key 和请求地址
+
+从面包API控制台复制 API Key 与请求地址，填入上一步的配置框中：
+
+- **Codex 请求地址**：`https://zhetoken.xyz/v1`
+
+![复制 API Key 和请求地址](images/codex-cc/6.png)
+
+### 第七步：重启 Codex 客户端
+
+配置好 cc-Switch 后重启 Codex 客户端，即可无需登录直接使用。
+
+---
+
+## 第二部分：Codex CLI 命令行配置
+
+欢迎使用 ZHETOKEN。本教程帮助你通过命令行方式完成 Codex 配置并开始使用。
 
 ## 快速导航
 
@@ -140,12 +197,7 @@ codex
 
 ##### 方式 2：手动配置
 
-1. 打开编辑器设置
-2. 搜索 `OpenAI`、`Codex` 或对应插件名
-3. 填入以下信息：
-
-- API Key：你在 ZHETOKEN 创建的令牌
-- Base URL：`https://zhetoken.xyz/v1`
+找到 `.codex` 文件夹下的 `config.toml` 文件（路径通常为 `~/.codex/config.toml` 或 `%USERPROFILE%\.codex\config.toml`），将其中内容修改为 cc-Switch 中显示的对应配置即可。
 
 #### 3. 开始使用
 

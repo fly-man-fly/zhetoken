@@ -1,4 +1,4 @@
-# cc-Switch 使用教程（新手推荐）
+# cc-Switch 与ssh主机使用ai教程
 
 本教程旨在帮助开发者通过 **VS Code** 结合 **cc-Switch** 工具，快速实现 Claude Code 对第三方模型（API）的无缝调用与灵活配置。
 
@@ -154,6 +154,10 @@ cat ~/.claude/settings.json
 * 将之前复制的代理地址与密钥填入对应位置，完成后的效果参考下图：
 
 ![填写代理信息](images/cc-switch/Claude%20code使用教程26.png)
+
+如果是在 SSH 连接的主机上使用 Codex 插件，`~/.codex/config.toml` 中需将 `base_url` 修改为 `"http://127.0.0.1:15721/v1"`，其他配置复制 cc-Switch 中的内容即可：
+
+![SSH 主机 Codex 配置示例](images/cc-switch/ssh-codex-config.png)
 
 **④ 完成配置并运行**：
 操作逻辑与本地运行一致。点击右侧边栏的 Claude Code 图标，若直接进入对话界面，说明远程配置成功。现在，尽情享受您的远程 Vibe Coding 体验吧！

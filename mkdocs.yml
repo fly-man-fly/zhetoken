@@ -29,8 +29,9 @@ theme:
 
 nav:
   - 注册 & API/Key & 充值: index.md
-  - Codex CLI 配置教程: codex-cli.md
-  - cc-Switch 使用教程（新手推荐）: cline.md
+  - Codex CLI 配置教程（新手最推荐）: codex-cli.md
+  - cc-Switch 与ssh主机使用ai教程: cline.md
+  - AI 科研辅助: research.md
 
 markdown_extensions:
   - admonition
